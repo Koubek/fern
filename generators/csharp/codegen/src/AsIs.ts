@@ -5,6 +5,7 @@ export const COLLECTION_ITEM_SERIALIZER_CLASS_NAME = "CollectionItemSerializer";
 export const DATETIME_SERIALIZER_CLASS_NAME = "DateTimeSerializer";
 export const CONSTANTS_CLASS_NAME = "Constants";
 export const JSON_UTILS_CLASS_NAME = "JsonUtils";
+export const ENUM_CONVERT_CLASS_NAME = "EnumConvert";
 
 export const AsIsFiles = {
     CiYaml: "github-ci.yml",
@@ -13,6 +14,7 @@ export const AsIsFiles = {
     CustomProps: "Custom.props.Template",
     DateTimeSerializer: "DateTimeSerializer.cs",
     EnumConverter: "EnumConverter.Template.cs",
+    EnumConvert: "EnumConvert.Template.cs",
     EnumSerializer: "EnumSerializer.Template.cs",
     Extensions: "Extensions.cs",
     GitIgnore: ".gitignore.Template",

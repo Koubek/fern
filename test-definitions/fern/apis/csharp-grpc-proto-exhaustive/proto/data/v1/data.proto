@@ -27,6 +27,7 @@ message Column {
   ];
   google.protobuf.Struct metadata = 3;
   IndexedData indexed_data = 4;
+  optional string enum_prop = 6;
 }
 
 message ScoredColumn {

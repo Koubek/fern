@@ -52,5 +52,13 @@ components:
           $ref: '#/components/schemas/Metadata'
     Column:
       properties:
+        enumProp:
+          $ref: '#/components/schemas/TestEnum'
         metadata:
           $ref: '#/components/schemas/Metadata'
+    TestEnum:
+      type: string
+      enum:
+        - A
+        - B
+        - C

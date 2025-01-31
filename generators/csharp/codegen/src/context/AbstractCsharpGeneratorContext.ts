@@ -21,6 +21,7 @@ import {
     COLLECTION_ITEM_SERIALIZER_CLASS_NAME,
     CONSTANTS_CLASS_NAME,
     DATETIME_SERIALIZER_CLASS_NAME,
+    ENUM_CONVERT_CLASS_NAME,
     ENUM_SERIALIZER_CLASS_NAME,
     JSON_UTILS_CLASS_NAME,
     ONE_OF_SERIALIZER_CLASS_NAME,
@@ -194,6 +195,13 @@ export abstract class AbstractCsharpGeneratorContext<
         return csharp.classReference({
             namespace: this.getCoreNamespace(),
             name: JSON_UTILS_CLASS_NAME
+        });
+    }
+
+    public getEnumConvertClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: this.getCoreNamespace(),
+            name: ENUM_CONVERT_CLASS_NAME
         });
     }
 

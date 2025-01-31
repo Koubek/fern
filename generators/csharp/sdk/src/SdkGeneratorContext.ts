@@ -146,7 +146,8 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             AsIsFiles.HttpMethodExtensions,
             AsIsFiles.JsonConfiguration,
             AsIsFiles.OneOfSerializer,
-            AsIsFiles.RawClient
+            AsIsFiles.RawClient,
+            AsIsFiles.EnumConvert,
         ];
         if (this.hasGrpcEndpoints()) {
             files.push(AsIsFiles.RawGrpcClient);

@@ -257,7 +257,7 @@ class ToProtoPropertyMapper {
                     wrapperType
                 });
             case "named":
-                return this.getValueForNamed({ propertyName, wrapperType });
+                return this.getValueForNamed({ propertyName, namedTypeReference: typeReference, wrapperType });
             case "primitive":
                 return this.getValueForPrimitive({ propertyName, primitive: typeReference.primitive, wrapperType });
             case "unknown":
@@ -267,13 +267,27 @@ class ToProtoPropertyMapper {
 
     private getValueForNamed({
         propertyName,
+        namedTypeReference,
         wrapperType
     }: {
         propertyName: string;
+        namedTypeReference: TypeReference.Named;
         wrapperType?: WrapperType;
     }): CodeBlock {
         if (wrapperType === WrapperType.List) {
             return csharp.codeblock(`${propertyName}.Select(elem => elem.ToProto())`);
+        }
+        const typeDeclaration = this.context.getTypeDeclarationOrThrow(namedTypeReference.typeId);
+        if (typeDeclaration.shape.type === "enum") {
+            return csharp.codeblock((writer) => {
+                writer.writeNode(
+                    csharp.invokeMethod({
+                        on: this.context.getEnumConvertClassReference(),
+                        method: "ToString",
+                        arguments_: [csharp.codeblock(propertyName)]
+                    })
+                );
+            });
         }
         return csharp.codeblock((writer) => {
             writer.writeNode(
@@ -483,6 +497,23 @@ class FromProtoPropertyMapper {
             return csharp.codeblock((writer) => {
                 writer.writeNode(propertyClassReference);
                 writer.write(".FromProto");
+            });
+        }
+        const propertyTypeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId);
+        if (propertyTypeDeclaration.shape.type === "enum") {
+            return csharp.codeblock((writer) => {
+                writer.writeNode(
+                    csharp.invokeMethod({
+                        on: this.context.getEnumConvertClassReference(),
+                        method: "ToEnum",
+                        generics: [
+                            csharp.Type.reference(propertyClassReference),
+                        ],
+                        arguments_: [
+                            csharp.codeblock(propertyName)
+                        ]
+                    })
+                );
             });
         }
         const fromProtoExpression = csharp.codeblock((writer) => {

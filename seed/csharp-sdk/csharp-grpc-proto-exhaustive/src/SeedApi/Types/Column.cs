@@ -20,6 +20,9 @@ public record Column
     [JsonPropertyName("indexedData")]
     public IndexedData? IndexedData { get; set; }
 
+    [JsonPropertyName("enumProp")]
+    public TestEnum? EnumProp { get; set; }
+
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
@@ -44,6 +47,10 @@ public record Column
         {
             result.IndexedData = IndexedData.ToProto();
         }
+        if (EnumProp != null)
+        {
+            result.EnumProp = EnumConvert.ToString(EnumProp);
+        }
         return result;
     }
 
@@ -59,6 +66,7 @@ public record Column
             Metadata = value.Metadata != null ? Metadata.FromProto(value.Metadata) : null,
             IndexedData =
                 value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null,
+            EnumProp = EnumConvert.ToEnum<TestEnum>(value.EnumProp),
         };
     }
 }
