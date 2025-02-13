@@ -142,7 +142,7 @@ jobs:
 
   docs-dev-test-windows:
     environment: Fern Dev
-    if: ${{ github.repository == 'fern-api/fern' }}
+    #if: ${{ github.repository == 'fern-api/fern' }}
     runs-on: windows-latest
     steps:
       - name: Checkout repo
@@ -178,7 +178,7 @@ jobs:
 
   live-test-dev-windows:
     environment: Fern Dev
-    # if: ${{ github.ref == 'refs/heads/main' && github.repository == 'fern-api/fern' }}
+    if: ${{ github.ref == 'refs/heads/main' && github.repository == 'fern-api/fern' }}
     runs-on: windows-latest
     steps:
       - name: Checkout repo
